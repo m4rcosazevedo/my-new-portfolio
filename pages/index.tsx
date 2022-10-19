@@ -22,34 +22,36 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <div className="container mx-auto px-8">
+        <Header />
 
-      <section id="hero" className="snap-start">
-        <Hero />
-      </section>
+        <section id="hero" className="snap-start">
+          <Hero />
+        </section>
 
-      <section id="about" className="snap-center">
-        <About />
-      </section>
+        <section id="about" className="snap-center">
+          <About />
+        </section>
 
-      <section id="experience" className="snap-center">
-        <WorkExperience />
-      </section>
+        <section id="experience" className="snap-center">
+          <WorkExperience />
+        </section>
 
-      <section id="skills" className="snap-start">
-        <Skills />
-      </section>
+        <section id="skills" className="snap-start">
+          <Skills />
+        </section>
 
-      <section id="projects" className="snap-start">
-        <Projects />
-      </section>
+        <section id="projects" className="snap-start">
+          <Projects />
+        </section>
 
-      <section id="contact" className="snap-start">
-        <ContactMe />
-      </section>
+        <section id="contact" className="snap-start">
+          <ContactMe />
+        </section>
+      </div>
 
       <Link href="#hero">
-        <footer className="sticky bottom-5 w-full cursor-pointer">
+        <footer className="sticky bottom-5 mx-auto w-10 cursor-pointer">
           <div className="flex items-center justify-center">
             <img
               className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0"
