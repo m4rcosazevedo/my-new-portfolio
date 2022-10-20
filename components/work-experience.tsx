@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import ExperienceCard from './experience-card'
+import { Title } from './ui'
 
 type Props = {}
 
@@ -15,9 +16,7 @@ export default function WorkExperience ({}: Props) {
         px-10 justify-evenly mx-auto items-center
       "
     >
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
-        Experience
-      </h3>
+      <Title>Experience</Title>
 
       <div className="
         mt-28 w-full flex space-x-5 overflow-x-scroll p-10 snap-x snap-mandatory

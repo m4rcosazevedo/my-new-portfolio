@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import About from '../components/about'
 import Header from '../components/header'
@@ -9,7 +9,13 @@ import Projects from '../components/projects'
 import ContactMe from '../components/contact-me'
 import Link from 'next/link'
 
-const Home: NextPage = () => {
+import { skillService } from '../service/skill-service'
+
+type Props = {
+  skills?: Skills
+}
+
+const Home: NextPage = ({ skills }: Props) => {
   return (
     <div className="
       bg-[rgb(36,36,36)] text-white h-screen
@@ -37,9 +43,11 @@ const Home: NextPage = () => {
           <WorkExperience />
         </section>
 
-        <section id="skills" className="snap-start">
-          <Skills />
-        </section>
+        {skills && (
+          <section id="skills" className="snap-start">
+            <Skills skills={skills} />
+          </section>
+        )}
 
         <section id="projects" className="snap-start">
           <Projects />
@@ -67,3 +75,14 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const skills = await skillService.all()
+  console.log(skills);
+  
+  return {
+    props: {
+      skills
+    }
+  }
+}

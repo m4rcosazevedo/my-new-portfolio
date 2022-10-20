@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
 import BackgroundCircles from './background-circles'
 
@@ -7,9 +8,6 @@ type Props = { }
 export default function Hero({}: Props) {
   const [text] = useTypewriter({
     words: [
-      'Hi, The Name\'s Marcos Azevedo',
-      'guy-who-loves-coffee.tsx',
-      '<ButLovesToCodeMore />',
       'Olá, Meu nome é Marcos Azevedo',
       'uma-pessoa-que-ama-cafe.tsx',
       '<MasAmaMaisCoding />',
@@ -21,9 +19,12 @@ export default function Hero({}: Props) {
     <div className="h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
       <BackgroundCircles />
      
-      <img
+      <motion.img
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
         className="relative rounded-full w-32 h-32 mx-auto object-cover"
-        src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600&q=80" alt=""
+        src="https://ca.slack-edge.com/T01AWAX48KB-U0279EJ9PGC-15d46afb1ff0-512" alt=""
       />
 
       <div className="z-20">

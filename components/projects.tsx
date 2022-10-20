@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Title } from './ui'
 
 type Props = {}
 
@@ -15,9 +16,7 @@ export default function Projects ({}: Props) {
         max-w-full justify-evenly mx-auto items-center z-0
       "
     >
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
-        Projects
-      </h3>
+      <Title>Projects</Title>
 
       <div className="
         relative w-full flex overflow-x-scroll
