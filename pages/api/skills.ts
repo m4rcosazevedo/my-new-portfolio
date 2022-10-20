@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
-  image: string
-  level: number
-}[]
+type Data = Skills
 
 const skills = [
   { image: 'https://skillicons.dev/icons?i=html', level: 100 },
