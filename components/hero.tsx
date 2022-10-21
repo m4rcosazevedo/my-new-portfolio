@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
 import BackgroundCircles from './background-circles'
+import images from '../utils/images'
 
 type Props = { }
 
@@ -24,7 +25,7 @@ export default function Hero({}: Props) {
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
         className="relative rounded-full w-32 h-32 mx-auto object-cover"
-        src="https://ca.slack-edge.com/T01AWAX48KB-U0279EJ9PGC-15d46afb1ff0-512" alt=""
+        src={images.hero} alt=""
       />
 
       <div className="z-20">

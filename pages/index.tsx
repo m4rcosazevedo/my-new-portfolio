@@ -9,13 +9,17 @@ import Projects from '../components/projects'
 import ContactMe from '../components/contact-me'
 import Link from 'next/link'
 
+import images from '../utils/images'
+
 import { skillService } from '../service/skill-service'
+import { aboutService } from '../service/about-service'
 
 type Props = {
   skills?: Skills
+  about?: About
 }
 
-const Home: NextPage = ({ skills }: Props) => {
+const Home: NextPage = ({ skills, about }: Props) => {
   return (
     <div className="
       bg-[rgb(36,36,36)] text-white h-screen
@@ -25,7 +29,6 @@ const Home: NextPage = ({ skills }: Props) => {
       <Head>
         <title>Marcos Azevedo</title>
         <meta name="description" content="An awesome portfolio" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container mx-auto px-8">
@@ -35,9 +38,11 @@ const Home: NextPage = ({ skills }: Props) => {
           <Hero />
         </section>
 
-        <section id="about" className="snap-center">
-          <About />
-        </section>
+        {about && (
+          <section id="about" className="snap-center">
+            <About about={about} />
+          </section>
+        )}
 
         <section id="experience" className="snap-center">
           <WorkExperience />
@@ -63,7 +68,7 @@ const Home: NextPage = ({ skills }: Props) => {
           <div className="flex items-center justify-center">
             <img
               className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0"
-              src="https://i.imgur.com/e2yvD6A.png"
+              src={images.buttonToTop}
               alt=""
             />
           </div>
@@ -78,11 +83,19 @@ export default Home
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const skills = await skillService.all()
-  console.log(skills);
-  
+  const about = await aboutService.me()  
+
+  const SECOND = 1
+  const MINUTE = 60 * SECOND
+  const HOUR = 60 * MINUTE
+
+  const revalidateIn = HOUR
+
   return {
     props: {
-      skills
-    }
+      skills,
+      about
+    },
+    // revalidate: revalidateIn
   }
 }
