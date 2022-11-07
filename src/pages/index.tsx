@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import About from '../components/about'
 import Header from '../components/header'
@@ -8,24 +8,32 @@ import Skills from '../components/skills'
 import Projects from '../components/projects'
 import ContactMe from '../components/contact-me'
 import Link from 'next/link'
-
-import { skillService } from '../service/skill-service'
 import { sheets } from '../service/sheets-service'
+// import { useEffect, useState } from 'react'
 
-export async function getStaticProps({}: GetStaticPropsContext) {
-  const skills = await skillService.all()
+type Props = {
+  skills: Skills,
+  about: About,
+  contact: Contact,
+  experiences: Experience[],
+  hero: Hero,
+  projects: Projects
+}
 
-  // const SECOND = 1
-  // const MINUTE = 60 * SECOND
-  // const HOUR = 60 * MINUTE
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  // const skills = await skillService.all()
 
-  // const revalidateIn = HOUR
+  const SECOND = 1
+  const MINUTE = 60 * SECOND
+  const HOUR = 60 * MINUTE
+  const revalidateIn = HOUR * 5
 
   const about = await sheets.about()
   const contact = await sheets.contact()
   const experiences = await sheets.experiences()
   const hero = await sheets.hero()
   const projects = await sheets.projects()
+  const skills = await sheets.skills()
 
   return {
     props: {
@@ -36,20 +44,12 @@ export async function getStaticProps({}: GetStaticPropsContext) {
       hero,
       projects
     },
-    // revalidate: 1
-    // revalidate: revalidateIn
+    revalidate: revalidateIn
   }
 }
 
+
 export default function Home (props: InferGetStaticPropsType<typeof getStaticProps>) {
-/*   const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    setLoading(false)
-  }, [])
-
-  if (loading) return <>Carregando...</> */
-
   const { skills, about, contact, experiences, hero, projects } = props
 
   return (

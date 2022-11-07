@@ -15,7 +15,7 @@ export default function Skill ({ directionLeft, lvl, skill }: Props) {
           h-10 w-10 md:w-14 md:h-14 xl:w-20 xl:h-20
           filter group-hover:grayscale transition duration-300 ease-in-out
         "
-        src={skill.image}
+        src={`https://skillicons.dev/icons?i=${skill.image}`}
         alt=""
       />
       <div className="

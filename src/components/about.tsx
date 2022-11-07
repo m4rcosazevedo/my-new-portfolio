@@ -27,7 +27,7 @@ export default function About ({ about }: Props) {
         src={about.image}
         className="
           -mb-20 md:mb-0 flex-shrink-0 w-56 h-56 rounded-full
-          object-cover md:rounded-lg md:w-64 md:h-95 xl:w-[500px] xl:h-[600px]
+          object-cover md:rounded-lg md:w-64 md:h-95 xl:w-[300px] xl:h-[400px]
         "
       />
 

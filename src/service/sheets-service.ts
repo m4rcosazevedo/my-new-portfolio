@@ -78,7 +78,27 @@ class Sheets extends SpreadSheetService {
     throw new ServerError()
   }
 
-  async hero (): Promise<Hero|null> {
+  async skills (): Promise<Skills> {
+    const response = await this.request<Array<string[]>>('skills')
+
+    if (response.statusCode === 200) {
+      const body = response.body ?? []
+      body.splice(0, 1)
+
+      return body.map(item => {
+        const [image, level] = item
+
+        return ({
+          image,
+          level: Number(level)
+        })
+      })
+    }
+
+    throw new ServerError()
+  }
+
+  async hero (): Promise<Hero> {
     const response = await this.request('hero')
 
     if (response.statusCode === 200) {
