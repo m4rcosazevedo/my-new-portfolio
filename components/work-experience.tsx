@@ -1,10 +1,21 @@
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import ExperienceCard from './experience-card'
 import { Title } from './ui'
 
-type Props = {}
+type Props = {
+  experiences: Experience[]
+}
 
-export default function WorkExperience ({}: Props) {
+export default function WorkExperience ({ experiences }: Props) {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    setShow(true)
+  }, [])
+
+  if (!show) return null
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -22,10 +33,9 @@ export default function WorkExperience ({}: Props) {
         mt-28 w-full flex space-x-5 overflow-x-scroll p-10 snap-x snap-mandatory
         scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80
       ">
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
+        {experiences.map((experience, index) => (
+          <ExperienceCard key={index} experience={experience!} />
+        ))}
       </div>
     </motion.div>
   )

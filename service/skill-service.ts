@@ -9,7 +9,7 @@ class SkillService extends ApiService {
     })
 
     switch (statusCode) {
-      case 200: return body
+      case 200: return body ?? []
       default: throw new ServerError()
     }
 

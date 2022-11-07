@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from 'next'
+import type { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
 import About from '../components/about'
 import Header from '../components/header'
@@ -9,17 +9,49 @@ import Projects from '../components/projects'
 import ContactMe from '../components/contact-me'
 import Link from 'next/link'
 
-import images from '../utils/images'
-
 import { skillService } from '../service/skill-service'
-import { aboutService } from '../service/about-service'
+import { sheets } from '../service/sheets-service'
 
-type Props = {
-  skills?: Skills
-  about?: About
+export async function getStaticProps({}: GetStaticPropsContext) {
+  const skills = await skillService.all()
+
+  // const SECOND = 1
+  // const MINUTE = 60 * SECOND
+  // const HOUR = 60 * MINUTE
+
+  // const revalidateIn = HOUR
+
+  const about = await sheets.about()
+  const contact = await sheets.contact()
+  const experiences = await sheets.experiences()
+  const hero = await sheets.hero()
+  const projects = await sheets.projects()
+
+  return {
+    props: {
+      skills,
+      about,
+      contact,
+      experiences,
+      hero,
+      projects
+    },
+    // revalidate: 1
+    // revalidate: revalidateIn
+  }
 }
 
-const Home: NextPage = ({ skills, about }: Props) => {
+export default function Home (props: InferGetStaticPropsType<typeof getStaticProps>) {
+/*   const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(false)
+  }, [])
+
+  if (loading) return <>Carregando...</> */
+
+  const { skills, about, contact, experiences, hero, projects } = props
+
   return (
     <div className="
       bg-[rgb(36,36,36)] text-white h-screen
@@ -34,9 +66,11 @@ const Home: NextPage = ({ skills, about }: Props) => {
       <div className="container mx-auto px-8">
         <Header />
 
-        <section id="hero" className="snap-start">
-          <Hero />
-        </section>
+        {!!hero && (
+          <section id="hero" className="snap-start">
+            <Hero hero={hero}/>
+          </section>
+        )}
 
         {about && (
           <section id="about" className="snap-center">
@@ -44,23 +78,29 @@ const Home: NextPage = ({ skills, about }: Props) => {
           </section>
         )}
 
-        <section id="experience" className="snap-center">
-          <WorkExperience />
-        </section>
+        {!!experiences && (
+          <section id="experience" className="snap-center">
+            <WorkExperience experiences={experiences} />
+          </section>
+        )}
 
-        {skills && (
+        {!!skills && (
           <section id="skills" className="snap-start">
             <Skills skills={skills} />
           </section>
         )}
 
-        <section id="projects" className="snap-start">
-          <Projects />
-        </section>
+        {!!projects && (
+          <section id="projects" className="snap-start">
+            <Projects projects={projects} />
+          </section>
+        )}
 
-        <section id="contact" className="snap-start">
-          <ContactMe />
-        </section>
+        {!!contact && (
+          <section id="contact" className="snap-start">
+            <ContactMe contact={contact} />
+          </section>
+        )}
       </div>
 
       <Link href="#hero">
@@ -68,7 +108,7 @@ const Home: NextPage = ({ skills, about }: Props) => {
           <div className="flex items-center justify-center">
             <img
               className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0"
-              src={images.buttonToTop}
+              src="https://iili.io/mQAept.png"
               alt=""
             />
           </div>
@@ -77,25 +117,4 @@ const Home: NextPage = ({ skills, about }: Props) => {
 
     </div>
   )
-}
-
-export default Home
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const skills = await skillService.all()
-  const about = await aboutService.me()  
-
-  const SECOND = 1
-  const MINUTE = 60 * SECOND
-  const HOUR = 60 * MINUTE
-
-  const revalidateIn = HOUR
-
-  return {
-    props: {
-      skills,
-      about
-    },
-    // revalidate: revalidateIn
-  }
 }

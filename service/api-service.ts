@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios'
 
-type RequestData<T> = {
+export type RequestData<T> = {
   url: string
   data?: T
   method: 'get'|'put'|'post'|'delete'
@@ -8,7 +8,7 @@ type RequestData<T> = {
   headers?: object
 }
 
-type HttpResponse<T = any> = {
+export type HttpResponse<T = any> = {
   statusCode: number
   body?: T
 }
