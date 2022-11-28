@@ -1,6 +1,6 @@
 import { PhoneIcon, MapPinIcon, EnvelopeIcon } from '@heroicons/react/24/solid'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { Title } from './ui'
+import { SubmitHandler, useForm } from "react-hook-form"
+import { Section } from "../ui"
 
 type Props = {
   contact: Contact
@@ -13,43 +13,32 @@ type Inputs = {
   message: string
 }
 
-export default function ContactMe ({ contact }: Props) {
+export default function Contact ({ contact }: Props) {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>()
   
   const onSubmit: SubmitHandler<Inputs> = formData => {
     window.location.href = `mailto:m4rcos.azevedo@gmail.com?subject=${formData.subject}&body=Hi, my name is ${formData.name}. ${formData.message} (${formData.email})`
   }
 
-  if (!contact) return <p>Carregando...</p>
-
   return (
-    <div
-      className="
-        h-screen relative flex flex-col text-center md:text-left
-        md:flex-row max-w-7xl justify-evenly mx-auto items-center
-      "
-    >
-      <Title>Contact</Title>
-      
+    <Section id="contact" className="snap-center" title="Contact Me">
       <div className="flex flex-col space-y-10">
-        <h4 className="text-4xl font-semibold text-center" dangerouslySetInnerHTML={{ __html: contact.title }} />
-
         <div className="space-y-10">
-          {!!contact.phone && (
+          {!!contact?.phone && (
             <div className="flex items-center space-x-5 justify-center">
               <PhoneIcon className="text-[#F7AB0A] h-7 w-7 animate-pulse" />
               <p className="text-2xl">{contact.phone}</p>
             </div>
           )}
 
-          {!!contact.address && (
+          {!!contact?.address && (
             <div className="flex items-center space-x-5 justify-center">
               <MapPinIcon className="text-[#F7AB0A] h-7 w-7 animate-pulse" />
               <p className="text-2xl">{contact.address}</p>
             </div>
           )}
 
-          {!!contact.email && (
+          {!!contact?.email && (
             <div className="flex items-center space-x-5 justify-center">
               <EnvelopeIcon className="text-[#F7AB0A] h-7 w-7 animate-pulse" />
               <p className="text-2xl">{contact.email}</p>
@@ -72,9 +61,7 @@ export default function ContactMe ({ contact }: Props) {
             text-lg 
           ">Submit</button>
         </form>
-
       </div>
-
-    </div>
+    </Section>
   )
 }

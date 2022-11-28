@@ -1,120 +1,67 @@
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import Head from 'next/head'
-import About from '../components/about'
-import Header from '../components/header'
-import Hero from '../components/hero'
-import WorkExperience from '../components/work-experience'
-import Skills from '../components/skills'
-import Projects from '../components/projects'
-import ContactMe from '../components/contact-me'
-import Link from 'next/link'
-import { sheets } from '../service/sheets-service'
-// import { useEffect, useState } from 'react'
+import { GetStaticProps, InferGetStaticPropsType } from "next"
+
+import { sheets } from "../service/sheets-service"
+import { About } from "../components/about/about"
+import { Header } from "../components/header/header"
+import { Hero } from "../components/hero/hero"
+import { WorkExperience } from "../components/work-experience/work-experience"
+import { Skills } from "../components/skills/skills"
+import Contact from "../components/contact/contact"
+import { Projects } from "../components/projects/projects"
 
 type Props = {
-  skills: Skills,
-  about: About,
-  contact: Contact,
-  experiences: Experience[],
   hero: Hero,
+  about: About, 
+  experiences: Experience[],
+  skills: Skills,
   projects: Projects
+  contact: Contact,
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  // const skills = await skillService.all()
-
   const SECOND = 1
   const MINUTE = 60 * SECOND
   const HOUR = 60 * MINUTE
   const revalidateIn = HOUR * 5
-
-  const about = await sheets.about()
-  const contact = await sheets.contact()
-  const experiences = await sheets.experiences()
+  
   const hero = await sheets.hero()
-  const projects = await sheets.projects()
+  const about = await sheets.about()
+  const experiences = await sheets.experiences()
   const skills = await sheets.skills()
-
+  const projects = await sheets.projects()
+  const contact = await sheets.contact()
+  
   return {
     props: {
-      skills,
-      about,
-      contact,
-      experiences,
       hero,
-      projects
+      about,
+      experiences,
+      skills,
+      projects,
+      contact
     },
     revalidate: revalidateIn
   }
 }
 
-
 export default function Home (props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { skills, about, contact, experiences, hero, projects } = props
+  const { hero, about, experiences, skills, projects, contact } = props
+
 
   return (
-    <div className="
-      bg-[rgb(36,36,36)] text-white h-screen
-      snap-y snap-mandatory overflow-y-scroll overflow-x-hidden z-0
+    <div className="bg-[rgb(36,36,36)] text-white h-screen z-0 snap-y
+      snap-mandatory overflow-y-scroll overflow-x-hidden
       scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80
     ">
-      <Head>
-        <title>Marcos Azevedo</title>
-        <meta name="description" content="An awesome portfolio" />
-      </Head>
-
       <div className="container mx-auto px-8">
         <Header />
-
-        {!!hero && (
-          <section id="hero" className="snap-start">
-            <Hero hero={hero}/>
-          </section>
-        )}
-
-        {about && (
-          <section id="about" className="snap-center">
-            <About about={about} />
-          </section>
-        )}
-
-        {!!experiences && (
-          <section id="experience" className="snap-center">
-            <WorkExperience experiences={experiences} />
-          </section>
-        )}
-
-        {!!skills && (
-          <section id="skills" className="snap-start">
-            <Skills skills={skills} />
-          </section>
-        )}
-
-        {!!projects && (
-          <section id="projects" className="snap-start">
-            <Projects projects={projects} />
-          </section>
-        )}
-
-        {!!contact && (
-          <section id="contact" className="snap-start">
-            <ContactMe contact={contact} />
-          </section>
-        )}
+        <Hero hero={hero} />
+        <About about={about} />
+        <WorkExperience experiences={experiences} />
+        <Skills skills={skills} />
+        <Projects projects={projects} />
+        <Contact contact={contact} />
       </div>
-
-      <Link href="#hero">
-        <footer className="sticky bottom-5 mx-auto w-10 cursor-pointer">
-          <div className="flex items-center justify-center">
-            <img
-              className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0"
-              src="https://iili.io/mQAept.png"
-              alt=""
-            />
-          </div>
-        </footer>
-      </Link>
-
     </div>
   )
 }
