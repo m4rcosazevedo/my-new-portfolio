@@ -1,6 +1,7 @@
 import { SocialIcon, SocialIconProps } from  'react-social-icons'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Head from 'next/head'
 
 const socials = [
   "https://linkedin.com/in/marcospca",
@@ -40,19 +41,31 @@ const Icon = (props: SocialIconProps) => (
 
 export function Header () {
   return (
-    <header className="sticky top-0 flex items-start justify-between max-w-7xl mx-auto z-20 xl:items-center">
-      <motion.div {...motionLeft}>
-        {socials.map(social => (
-          <Icon key={social} url={social} target="_blank" />
-        ))}
-      </motion.div>
+    <>
+      <Head>
+        <title>Marcos Azevedo</title>
+        <link rel="shortcut icon" href="https://iili.io/mQAept.png" />
+        <meta name="description" content="An awesome portfolio" />
+      </Head>
 
-      <Link href="#contact" className="text-gray-300 cursor-pointer">
-        <motion.div {...motionRight}>
-          <Icon className="cursor-pointer" network="email" />
-          <p className="uppercase hidden md:inline-flex text-sm text-gray-400">get in touch</p>
+      <header className="sticky top-0 flex items-start justify-between max-w-7xl mx-auto z-20 xl:items-center">
+        <motion.div {...motionLeft}>
+          {socials.map(social => (
+            <Icon 
+              key={social}
+              url={social}
+              target="_blank"
+            />
+          ))}
         </motion.div>
-      </Link>
-    </header>
+
+        <Link href="#contact" className="text-gray-300 cursor-pointer">
+          <motion.div {...motionRight}>
+            <Icon className="cursor-pointer" network="email" />
+            <p className="uppercase hidden md:inline-flex text-sm text-gray-400">get in touch</p>
+          </motion.div>
+        </Link>
+      </header>
+    </>
   )
 }
