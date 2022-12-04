@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next"
-
+import Link from 'next/link'
 import { sheets } from "../service/sheets-service"
 import { About } from "../components/about/about"
 import { Header } from "../components/header/header"
@@ -61,6 +61,18 @@ export default function Home (props: InferGetStaticPropsType<typeof getStaticPro
         <Skills skills={skills} />
         <Projects projects={projects} />
         <Contact contact={contact} />
+
+        <Link href="#hero">
+          <footer className="sticky bottom-5 mx-auto w-10 cursor-pointer">
+            <div className="flex items-center justify-center">
+              <img
+                className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0"
+                src="https://iili.io/mQAept.png"
+                alt=""
+              />
+            </div>
+          </footer>
+        </Link>
       </div>
     </div>
   )
